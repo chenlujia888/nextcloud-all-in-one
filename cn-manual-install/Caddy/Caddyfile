@@ -1,0 +1,18 @@
+{
+    log {
+        output file /data/log/caddy.log
+        format console
+    }
+}
+# 此处修改为实际对外访问的域名和端口，用caddy的alidns插件，可以自动获取SSL证书
+https://your.domain.com:<port> {
+    log
+    tls {   
+        dns alidns {
+            access_key_id {$ALIYUN_ACCESS_KEY_ID}
+            access_key_secret {$ALIYUN_ACCESS_KEY_SECRET}
+        }
+    }
+    reverse_proxy nextcloud-aio-apache:11000 
+    
+}
